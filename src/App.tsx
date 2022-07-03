@@ -36,14 +36,14 @@ const App: React.FC = () => {
     } else {
       setNameError(false);
     }
-    console.log("time", selectedDish.time===undefined)
-    if (!selectedDish.time) {
+
+    if (selectedDish.preparation_time === "00:00:00") {
       setTimeError(true);
     } else {
       setTimeError(false);
     }
 
-    return (selectedDish.name && selectedDish.preparation_time 
+    return (selectedDish.name && selectedDish.preparation_time !== "00:00:00"
       && selectedDish.type)
   }
 

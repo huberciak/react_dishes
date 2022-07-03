@@ -1,10 +1,5 @@
-@import 'bulma';
-
-.App {
-  text-align: center;
-}
-
 .form {
+  text-align: center;
   margin: auto;
   width: 20vw;
 }

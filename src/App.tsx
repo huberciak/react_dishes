@@ -79,7 +79,7 @@ const App: React.FC = () => {
 
 
   return ( 
-    <div className="App">
+    <div className="App has-text-centered">
       <h1 className="is-uppercase is-size-3">Add dish form</h1>
       <form onSubmit={handleFormSubmit} className="form box">
         <div>

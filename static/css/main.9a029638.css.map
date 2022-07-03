@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/main.9a029638.css","mappings":"AAMA,MACE,WAAY,CACZ,UACF","sources":["App.css"],"sourcesContent":["@import 'bulma';\n\n.App {\n  text-align: center;\n}\n\n.form {\n  margin: auto;\n  width: 20vw;\n}"],"names":[],"sourceRoot":""}

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Dish } from '../app.typedefs';
+import { BaseDish, ComponentProps, Dish, DishType } from '../app.typedefs';
 
-type Props = {
-  dish: Dish,
-}
 
-const Pizza: React.FC<Props> = ({ dish }) => {
+const Pizza: React.FC<ComponentProps> = ({ update }) => {
   
 const [selectedPizzaSlices, setSelectedPizzaSlices] = useState('');
 const [selectedPizzaDiameter, setSelectedPizzaDiameter] = useState(0);
+
+const addPizzaProps = () => {
+  update({no: selectedPizzaSlices, diameter: selectedPizzaDiameter});
+}
 
 return (
   <div>
@@ -36,7 +37,7 @@ return (
     }
 
     {!!(selectedPizzaDiameter && selectedPizzaSlices) &&
-      <button>Submit</button>}
+      <button onClick={addPizzaProps}>Submit</button>}
   </div>
   );
 };

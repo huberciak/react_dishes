@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Dish } from '../app.typedefs';
+import { ComponentProps, Dish, DishType } from '../app.typedefs';
 
-type Props = {
-  dish: Dish,
-}
-
-const Soup: React.FC<Props> = ({ dish }) => {
+const Soup: React.FC<ComponentProps> = ({ update }) => {
 
 const [selectedSoupSpicyness, setSelectedSoupSpicyness] = useState(0);
+
+const addSoupProps = () => {
+  update({spicyness: selectedSoupSpicyness});
+}
 
 return (
   <div>
@@ -24,7 +24,10 @@ return (
     }}
   />
   <span>{ selectedSoupSpicyness }</span>
-  <div><button>Submit</button></div>
+
+  <div>
+    <button onClick={() => addSoupProps()}>Submit</button>
+  </div>
 </div>
   );
 };

@@ -1,38 +1,60 @@
-import  React, { useState } from 'react';
+import  React, { useMemo, useState } from 'react';
 import  Pizza  from './Components/Pizza.tsx';
 import  Soup  from './Components/Soup.tsx';
 import  Sandwich  from './Components/Sandwich.tsx';
 
 import './App.css';
-import { type } from '@testing-library/user-event/dist/type';
-import { Dish } from './app.typedefs';
-//import { dishType } from './app.typedefs';
+import { ComponentProps, Dish, DishType } from './app.typedefs.tsx';
+import { BaseDish } from './app.typedefs';
 
-export enum dishType{
-  Pizza = "Pizza",
-  Soup = "Soup",
-  Sandwich = "Sandwich",
+const getComponentByType = (type: DishType): React.FC<ComponentProps> | undefined => {
+  switch (type) {
+    case DishType.Pizza:
+      return Pizza;
+
+    case DishType.Soup:
+      return Soup;
+
+    case DishType.Sandwich:
+      return Sandwich;
+    
+    default:
+      return undefined;
+  }
 }
 
-const dishes = [dishType.Pizza, dishType.Soup, dishType.Sandwich];
 
 const App: React.FC = () => {
-  const [selectedDishName, setSelectedDishName] = useState('');
-  const [selectedDishTime, setSelectedDishTime] = useState('');
-  const [selectedDishType, setSelectedDishType] = useState('' as dishType);
-
-  const ID = 1;
-
-  const selectedDish: Dish = {
-    id: ID,
-    name: selectedDishName,
-    preparation_time: selectedDishTime,
-    type: selectedDishType,
-  }
+  const [selectedDish, setSelectedDish] = useState<Dish>({});
+  
+  const dishes = useMemo(() => [DishType.Pizza, DishType.Soup, DishType.Sandwich], []);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log('Created dish:', selectedDish);
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(selectedDish),
+    };
+    
+    fetch("https://frosty-wood-6558.getsandbox.com/dishes", requestOptions)
+      .then(response => response.json())
+      .catch(error => console.log(error));
+
+    setSelectedDish({ name:'', type:0, preparation_time:'00:00:00'});
+
   }
+
+  const Component = selectedDish && getComponentByType(selectedDish.type);
+
+  const addProperties = (args: {}) => {
+    setSelectedDish(prevState => {
+      return {...prevState, ...args}
+  })
+  }
+
 
   return ( 
     <div className="App">
@@ -42,9 +64,13 @@ const App: React.FC = () => {
           <input
             type="text"
             name="name"
+            value={selectedDish.name}
             placeholder="Dish name"
             onChange={(event) => {
-              setSelectedDishName(event.target.value);
+              const val = event.target.value;
+              setSelectedDish(prevState => {
+                return {...prevState, name: val}
+              })
             }}
           />
         </div>
@@ -54,20 +80,28 @@ const App: React.FC = () => {
         <input
           type="time"
           step="1"
+          value={selectedDish.preparation_time}
           onChange={(event) => {
-            setSelectedDishTime(event.target.value);
+            const val = event.target.value;
+            setSelectedDish(prevState => {
+              return {...prevState, preparation_time: val}
+            })
           }}
         />
         </div>
 
         <div>
           <select
-            value={selectedDishType}
+            value={selectedDish.type}
             onChange={(event) => {
-              setSelectedDishType(event.target.value as dishType)
-            }}>
+              const val = event.target.value;
+              setSelectedDish(prevState => {
+                return {...prevState, type: val}
+              })
+            }}
+            >
 
-            <option value="" disabled>
+            <option disabled value={0}>
               Choose a dish
             </option>
 
@@ -80,14 +114,12 @@ const App: React.FC = () => {
             ))}
           </select>
         </div>
+      
+       {selectedDish.type && <Component update={addProperties}/>}
 
-       {selectedDishType === dishType.Pizza && <Pizza dish={selectedDish}/>}
-
-        {selectedDishType === dishType.Soup && <Soup dish={selectedDish}/>}
-
-        {selectedDishType === dishType.Sandwich && <Sandwich dish={selectedDish}/>}
       </form>
     </div>
+
   )
 }
 

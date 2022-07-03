@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Dish } from '../app.typedefs';
+import { ComponentProps, Dish, DishType } from '../app.typedefs';
 
-type Props = {
-  dish: Dish,
-}
-
-const Sandwich: React.FC<Props> = ({ dish }) => {
+const Sandwich: React.FC<ComponentProps> = ({ update }) => {
 
 const [selectedSandwichSlices, setSelectedSandwichSlices] = useState(0);
+
+const addSandwichProps = () => {
+  update({slices_of_bread: selectedSandwichSlices});
+}
 
 return (
   <div>
@@ -20,7 +20,7 @@ return (
       setSelectedSandwichSlices(+event.target.value);
     }}
   />
-  {!!selectedSandwichSlices && <button>Submit</button>}
+  {!!selectedSandwichSlices && <button onClick={addSandwichProps}>Submit</button>}
 </div>
 )
 };

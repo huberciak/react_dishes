@@ -14,10 +14,13 @@ const addPizzaProps = () => {
 return (
   <div>
     <div>
+    <label className="label">Number of slices:</label>
       <input
         type="number"
         name="no_of_slices"
+        className="input"
         placeholder="Slices"
+        min="1"
         onChange={(event) => {
           setSelectedPizzaSlices(event.target.value);
         }}
@@ -25,10 +28,14 @@ return (
     </div>
 
     {selectedPizzaSlices && <div>
+      <label className="label">Diameter:</label>
       <input
-        type="float"
+        type="number"
+        step="0.01"
         name="diameter"
+        className="input"
         placeholder="Diameter"
+        min="0"
         onChange={(event) => {
           setSelectedPizzaDiameter(+event.target.value);
         }}
@@ -37,7 +44,7 @@ return (
     }
 
     {!!(selectedPizzaDiameter && selectedPizzaSlices) &&
-      <button onClick={addPizzaProps}>Submit</button>}
+      <button className="button mt-2 is-success" onClick={addPizzaProps}>Submit</button>}
   </div>
   );
 };

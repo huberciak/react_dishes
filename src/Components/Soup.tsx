@@ -11,10 +11,11 @@ const addSoupProps = () => {
 
 return (
   <div>
-  <label htmlFor="spicyness">Spicyness</label>
+  <label className="label">Spicyness</label>
   <input
     type="range"
     name="spicyness"
+    className="slider"
     min="0"
     max="10"
     step="1"
@@ -26,7 +27,7 @@ return (
   <span>{ selectedSoupSpicyness }</span>
 
   <div>
-    <button onClick={() => addSoupProps()}>Submit</button>
+    <button className="button mt-2 is-success" onClick={addSoupProps}>Submit</button>
   </div>
 </div>
   );

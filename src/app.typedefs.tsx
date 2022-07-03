@@ -7,7 +7,7 @@ export enum DishType {
 export interface BaseDish {
   id: number,
   name: string,
-  type: DishType | undefined,
+  type: DishType | '',
   preparation_time: string,
 }
 

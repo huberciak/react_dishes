@@ -11,16 +11,23 @@ const addSandwichProps = () => {
 
 return (
   <div>
-  <input
-    type="number"
-    name="no_of_slices"
-    placeholder="Slices"
-    min='0'
-    onChange={(event) => {
-      setSelectedSandwichSlices(+event.target.value);
-    }}
-  />
-  {!!selectedSandwichSlices && <button onClick={addSandwichProps}>Submit</button>}
+  <div>
+    <label className="label">No of bread slices: </label>
+    <input
+      type="number"
+      name="no_of_slices"
+      className="input"
+      placeholder="Bread slices"
+      min="1"
+      onChange={(event) => {
+        setSelectedSandwichSlices(+event.target.value);
+      }}
+    />
+  </div>
+  {!!selectedSandwichSlices && 
+  <div>
+    <button className="button mt-2 is-success" onClick={addSandwichProps}>Submit</button>
+  </div>}
 </div>
 )
 };
